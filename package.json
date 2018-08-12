@@ -1,0 +1,23 @@
+{
+  "name": "cct1",
+  "version": "1.0.0",
+  "description": "chrome cast test 1",
+  "main": "index.js",
+  "scripts": {
+    "start": "node server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lopezezequiel/cct1.git"
+  },
+  "author": "López Ricardo Ezequiel",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/lopezezequiel/cct1/issues"
+  },
+  "homepage": "https://github.com/lopezezequiel/cct1#readme",
+  "dependencies": {
+    "express": "^4.16.3"
+  }
+}
