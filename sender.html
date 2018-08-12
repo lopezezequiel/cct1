@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Sender</title>
+</head>
+<body>
+    Ejemplo de emisor
+
+    <google-cast-launcher></google-cast-launcher>
+    <script>
+
+      initializeCastApi = function() {
+        cast.framework.CastContext.getInstance().setOptions({
+          receiverApplicationId: F8EDFA55,
+          autoJoinPolicy: chrome.cast.AutoJoinPolicy.ORIGIN_SCOPED
+        });
+      };
+
+      window['__onGCastApiAvailable'] = function(isAvailable) {
+        if (isAvailable) {
+          initializeCastApi();
+        }
+      };
+
+    </script>
+    <script src="https://www.gstatic.com/cv/js/sender/v1/cast_sender.js?loadCastFramework=1"></script>
+</body>
+</html>
