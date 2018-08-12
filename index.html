@@ -15,6 +15,14 @@
   <cast-media-player></cast-media-player>
   <script>
 
+
+    var context = cast.framework.CastReceiverContext.getInstance();
+    context.addCustomMessageListener('urn:x-cast:ar.com.bondus', function(event) {
+      console.log('message', event);
+    })
+    context.start();
+
+/*
     console.log('cast', cast);
     console.log('cast.receiver', cast.receiver);
     console.log('cast.receiver.CastReceiverManager', cast.receiver.CastReceiverManager);
@@ -39,7 +47,7 @@
     }
 
     castReceiverManager.start();
-
+*/
     //cast.framework.CastReceiverContext.getInstance().start();
   </script>
 </body>
