@@ -100,53 +100,53 @@ window.player = null;
 // at the MIME type which would be better.  In practice, you will know what
 // content you are serving while writing your player.
 if (event.data['media'] && event.data['media']['contentId']) {
-console.log('Starting media application');
-var url = event.data['media']['contentId'];
-// Create the Host - much of your interaction with the library uses the Host and
-// methods you provide to it.
-window.host = new cast.player.api.Host({
-'mediaElement': mediaElement,
-'url': url
-});
-var ext = url.substring(url.lastIndexOf('.'), url.length);
-var initStart = event.data['media']['currentTime'] || 0;
-var autoplay = event.data['autoplay'] || true;
-var protocol = null;
-mediaElement.autoplay = autoplay; // Make sure autoplay get's set
-if (url.lastIndexOf('.m3u8') >= 0) {
-// HTTP Live Streaming
-protocol = cast.player.api.CreateHlsStreamingProtocol(host);
-} else if (url.lastIndexOf('.mpd') >= 0) {
-// MPEG-DASH
-protocol = cast.player.api.CreateDashStreamingProtocol(host);
-} else if (url.indexOf('.ism/') >= 0) {
-// Smooth Streaming
-protocol = cast.player.api.CreateSmoothStreamingProtocol(host);
-}
+  console.log('Starting media application');
+  var url = event.data['media']['contentId'];
+  // Create the Host - much of your interaction with the library uses the Host and
+  // methods you provide to it.
+  window.host = new cast.player.api.Host({
+    'mediaElement': mediaElement,
+    'url': url
+  });
+  var ext = url.substring(url.lastIndexOf('.'), url.length);
+  var initStart = event.data['media']['currentTime'] || 0;
+  var autoplay = event.data['autoplay'] || true;
+  var protocol = null;
+  mediaElement.autoplay = autoplay; // Make sure autoplay get's set
+  if (url.lastIndexOf('.m3u8') >= 0) {
+    // HTTP Live Streaming
+    protocol = cast.player.api.CreateHlsStreamingProtocol(host);
+  } else if (url.lastIndexOf('.mpd') >= 0) {
+    // MPEG-DASH
+    protocol = cast.player.api.CreateDashStreamingProtocol(host);
+  } else if (url.indexOf('.ism/') >= 0) {
+    // Smooth Streaming
+    protocol = cast.player.api.CreateSmoothStreamingProtocol(host);
+  }
 
-// How to override a method in Host. I know that it's safe to just provide this
-// method.
-host.onError = function(errorCode) {
-console.log("Fatal Error - " + errorCode);
-if (window.player) {
-  window.player.unload();
-  window.player = null;
-}
-};
-// If you need cookies, then set withCredentials = true also set any header
-// information you need.  If you don't need them, there can be some unexpected
-// effects by setting this value.
-//      host.updateSegmentRequestInfo = function(requestInfo) {
-//        requestInfo.withCredentials = true;
-//      };
-console.log("we have protocol " + ext);
-if (protocol !== null) {
-console.log("Starting Media Player Library");
-window.player = new cast.player.api.Player(host);
-window.player.load(protocol, initStart);
-} else {
-window.defaultOnLoad(event); // do the default process
-}
+  // How to override a method in Host. I know that it's safe to just provide this
+  // method.
+  host.onError = function(errorCode) {
+    console.log("Fatal Error - " + errorCode);
+    if (window.player) {
+      window.player.unload();
+      window.player = null;
+    }
+  };
+  // If you need cookies, then set withCredentials = true also set any header
+  // information you need.  If you don't need them, there can be some unexpected
+  // effects by setting this value.
+  //      host.updateSegmentRequestInfo = function(requestInfo) {
+  //        requestInfo.withCredentials = true;
+  //      };
+  console.log("we have protocol " + ext);
+  if (protocol !== null) {
+    console.log("Starting Media Player Library");
+    window.player = new cast.player.api.Player(host);
+    window.player.load(protocol, initStart);
+  } else {
+    window.defaultOnLoad(event); // do the default process
+  }
 }
 }
 
@@ -162,60 +162,59 @@ console.log('Starting Receiver Manager');
 
 // handler for the 'ready' event
 castReceiverManager.onReady = function(event) {
-console.log('Received Ready event: ' + JSON.stringify(event.data));
-window.castReceiverManager.setApplicationState('Application status is ready...');
+  console.log('Received Ready event: ' + JSON.stringify(event.data));
+  window.castReceiverManager.setApplicationState('Application status is ready...');
 };
 
 // handler for 'senderconnected' event
 
 castReceiverManager.onSenderConnected = function(event) {
-if(userAgent == 0){console.log("Nuevo Sender");}else{
-  console.log("No tiene permitido castear a otra usuario");
-//userAgent = 0;
-//window.close()
-}
-console.log('Received Sender Connected event: ' + event.data);
-userAgent  = window.castReceiverManager.getSender(event.data).userAgent;
-console.log("User Agent :" + userAgent);
+  if(userAgent == 0){console.log("Nuevo Sender");}else{
+    console.log("No tiene permitido castear a otra usuario");
+  //userAgent = 0;
+  //window.close()
+  }
+  console.log('Received Sender Connected event: ' + event.data);
+  userAgent  = window.castReceiverManager.getSender(event.data).userAgent;
+  console.log("User Agent :" + userAgent);
 
 };
 
 // handler for 'senderdisconnected' event
 castReceiverManager.onSenderDisconnected = function(event) {
-console.log("Sender Desconectado");
-if(window.castReceiverManager.getSenders().length == 0 &&
-  event.reason == cast.receiver.system.DisconnectReason.REQUESTED_BY_SENDER) {
-  window.close();
-}
+  console.log("Sender Desconectado");
+  if(window.castReceiverManager.getSenders().length == 0 &&
+    event.reason == cast.receiver.system.DisconnectReason.REQUESTED_BY_SENDER) {
+    window.close();
+  }
 };
 
 // create a CastMessageBus to handle messages for a custom namespace
-window.messageBus = window.castReceiverManager.getCastMessageBus(
-'urn:x-cast:ar.com.bondus');
+window.messageBus = window.castReceiverManager.getCastMessageBus('urn:x-cast:ar.com.bondus');
 //com.google.cast.sample.helloworld
 // handler for the CastMessageBus message event
 window.messageBus.onMessage = function(event) {
-console.log('Message [' + event.senderId + ']: ' + event.data);
-// display the message from the sender
-//función para tratamiento de error
-if (event.data == "[]") {
-event.data = "No se obtuvieron mensajes";
-updateError1(event.data);
-//location.href ="http://31.220.63.234:8000/client.html";
-}
-else if(event.data == -1){
-updateIndex(event.data);
-//location.href ="http://31.220.63.234:8000/index.html";
-}
-else {
-updateRoomInfo(event.data);
-//location.href ="http://31.220.63.234:8000/client.html";
-}
-// inform all senders on the CastMessageBus of the incoming message event
-// sender message listener will be invoked
-window.messageBus.send(event.senderId, event.data);
+  console.log('Message [' + event.senderId + ']: ' + event.data);
+  // display the message from the sender
+  //función para tratamiento de error
+  if (event.data == "[]") {
+    event.data = "No se obtuvieron mensajes";
+    updateError1(event.data);
+    //location.href ="http://31.220.63.234:8000/client.html";
+  }
+  else if(event.data == -1){
+    updateIndex(event.data);
+    //location.href ="http://31.220.63.234:8000/index.html";
+  }
+  else {
+    updateRoomInfo(event.data);
+    //location.href ="http://31.220.63.234:8000/client.html";
+  }
+  // inform all senders on the CastMessageBus of the incoming message event
+  // sender message listener will be invoked
+  window.messageBus.send(event.senderId, event.data);
 
-window.castReceiverManager.setApplicationState(event.data);
+  window.castReceiverManager.setApplicationState(event.data);
 }
 
 //  };

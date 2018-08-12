@@ -9,7 +9,27 @@
   <script src="//www.gstatic.com/cast/sdk/libs/caf_receiver/v3/cast_receiver_framework.js"></script>
   <cast-media-player></cast-media-player>
   <script>
-    cast.framework.CastReceiverContext.getInstance().start();
+    var castReceiverManager = cast.receiver.CastReceiverManager.getInstance();
+    castReceiverManager.onReady = function(event) {
+      console.log('castReceiverManager.onReady', event);
+    }
+
+    castReceiverManager.onSenderConnected = function(event) {
+      console.log('castReceiverManager.onSenderConnected', event);
+    }
+
+    castReceiverManager.onSenderDisconnected = function(event) {
+      console.log('castReceiverManager.onSenderDisconnected', event);
+    }
+
+    var messageBus = castReceiverManager.getCastMessageBus('urn:x-cast:ar.com.bondus');
+    messageBus.onMessage = function(event) {
+      console.log('messageBus.onMessage', event);
+    }
+
+    castReceiverManager.start();
+
+    //cast.framework.CastReceiverContext.getInstance().start();
   </script>
 </body>
 </html>
