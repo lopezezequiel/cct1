@@ -15,6 +15,9 @@
           receiverApplicationId: 'F8EDFA55',
           autoJoinPolicy: chrome.cast.AutoJoinPolicy.ORIGIN_SCOPED
         });
+
+        var castSession = cast.framework.CastContext.getInstance().getCurrentSession();
+        
       };
 
       window['__onGCastApiAvailable'] = function(isAvailable) {
