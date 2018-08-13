@@ -12,7 +12,10 @@
 <body>
   Ejemplo de receptor
   <script src="//www.gstatic.com/cast/sdk/libs/caf_receiver/v3/cast_receiver_framework.js"></script>
-  <cast-media-player></cast-media-player>
+  <!--<cast-media-player></cast-media-player>-->
+  <div id="message">
+
+  </div>
   <script>
 
 
@@ -65,6 +68,7 @@
 
     context.addCustomMessageListener('urn:x-cast:com.example.test', function(event) {
       console.log('message', event);
+      document.getElementById('message').innerText = event.data.message;
     });
 
     context.start();
