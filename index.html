@@ -17,6 +17,10 @@
 
 
     var context = cast.framework.CastReceiverContext.getInstance();
+    context.addEventListener(cast.framework.system.EventType.READY, function(event) {
+      console.log('READY', event);
+    });
+    /*
     context.addCustomMessageListener('urn:x-cast:com.example.test', function(event) {
       console.log('message', event);
     })
@@ -66,7 +70,7 @@
     console.log('get senders', context.getSenders());
     console.log('get system state', context.getSystemState());
     console.log('get visibility state', context.getVisibilityState());
-
+*/
     context.start();
 
 /*
