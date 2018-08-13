@@ -19,6 +19,10 @@
     var context = cast.framework.CastReceiverContext.getInstance();
     context.addEventListener(cast.framework.system.EventType.READY, function(event) {
       console.log('READY', event);
+
+      context.addCustomMessageListener('urn:x-cast:com.example.test', function(event) {
+        console.log('message', event);
+      })
     });
 
     context.addEventListener(cast.framework.system.EventType.SHUTDOWN, function(event) {
@@ -63,11 +67,6 @@
       console.log('FEEDBACK_STARTED', event);
     });
 
-    /*
-    context.addCustomMessageListener('urn:x-cast:com.example.test', function(event) {
-      console.log('message', event);
-    })
-*/
     context.start();
 
 /*

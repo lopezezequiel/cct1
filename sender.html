@@ -56,7 +56,9 @@
             console.log('get volume', session.getVolume());
 
             console.log('sending message');
-            session.sendMessage('urn:x-cast:com.example.test', 'mensaje');
+            session.sendMessage('urn:x-cast:com.example.test', {
+              mensaje: 'Hola Mundo!'
+            });
 
           }
 
