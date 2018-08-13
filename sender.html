@@ -74,6 +74,11 @@
             var request = new chrome.cast.media.LoadRequest(mediaInfo);
             session.loadMedia(request).then(function() {
                 console.log('Load succeed');
+
+                var player = new cast.framework.RemotePlayer();
+                var playerController = new cast.framework.RemotePlayerController(player);
+                playerController.playOrPause();
+
               },
               function(errorCode) {
                 console.log('Error code: ' + errorCode);
