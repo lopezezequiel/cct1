@@ -67,6 +67,17 @@
               });
             });
 
+            var currentMediaURL = 'https://cct1.herokuapp.com/public/video.mp4';
+            var contentType = 'video/mp4';
+
+            var mediaInfo = new chrome.cast.media.MediaInfo(currentMediaURL, contentType);
+            var request = new chrome.cast.media.LoadRequest(mediaInfo);
+            session.loadMedia(request).then(function() {
+                console.log('Load succeed');
+              },
+              function(errorCode) {
+                console.log('Error code: ' + errorCode);
+            });
           }
 
         });
