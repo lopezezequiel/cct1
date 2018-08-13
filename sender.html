@@ -24,9 +24,9 @@
         });
 
         context.addEventListener(cast.framework.CastContext.SESSION_STATE_CHANGED, function(event) {
-          console.log('SESSION_STATE_CHANGED', event);
+          console.log('SESSION_STATE_CHANGED', event, context.getCurrentSession());
         });
-
+/*
         var session = context.getCurrentSession();
 
         session.addEventListener(cast.framework.CastSession.APPLICATION_STATUS_CHANGED, function(event) {
@@ -56,6 +56,7 @@
 
         console.log('sending message');
         session.sendMessage('urn:x-cast:com.example.test', 'mensaje');
+          */
       }
 /*
         setTimeout(function() {
