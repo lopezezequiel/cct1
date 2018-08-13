@@ -11,12 +11,53 @@
     <script>
 
       initializeCastApi = function() {
-        cast.framework.CastContext.getInstance().setOptions({
+
+        var context = cast.framework.CastContext.getInstance();
+
+        context.setOptions({
           receiverApplicationId: 'F8EDFA55',
           autoJoinPolicy: chrome.cast.AutoJoinPolicy.ORIGIN_SCOPED
         });
 
-        var castSession = cast.framework.CastContext.getInstance().getCurrentSession();
+        context.addEventListener(cast.framework.CastContext.CAST_STATE_CHANGED, function(event) {
+          console.log('CAST_STATE_CHANGED', event);
+        });
+
+        context.addEventListener(cast.framework.CastContext.SESSION_STATE_CHANGED, function(event) {
+          console.log('SESSION_STATE_CHANGED', event);
+        });
+
+        var session = context.getCurrentSession();
+
+        session.addEventListener(cast.framework.CastSession.APPLICATION_STATUS_CHANGED, function(event) {
+          console.log('APPLICATION_STATUS_CHANGED', event);
+        });
+
+        session.addEventListener(cast.framework.CastSession.APPLICATION_METADATA_CHANGED, function(event) {
+          console.log('APPLICATION_METADATA_CHANGED', event);
+        });
+
+        session.addEventListener(cast.framework.CastSession.ACTIVE_INPUT_STATE_CHANGED, function(event) {
+          console.log('ACTIVE_INPUT_STATE_CHANGED', event);
+        });
+
+        session.addEventListener(cast.framework.CastSession.VOLUME_CHANGED, function(event) {
+          console.log('VOLUME_CHANGED', event);
+        });
+
+        session.addEventListener(cast.framework.CastSession.MEDIA_SESSION, function(event) {
+          console.log('MEDIA_SESSION', event);
+        });
+
+        console.log('cast device', session.getCastDevice());
+        console.log('session id', session.getSessionId());
+        console.log('session state', session.getSessionState());
+        console.log('get volume', session.getVolume());
+
+        console.log('sending message');
+        session.sendMessage('urn:x-cast:com.example.test', 'mensaje');
+      }
+/*
         setTimeout(function() {
           castSession.sendMessage('urn:x-cast:ar.com.bondus', {
             method: 'log',
@@ -29,6 +70,7 @@
         }, 5000);
 
       };
+      */
 
       window['__onGCastApiAvailable'] = function(isAvailable) {
         if (isAvailable) {
