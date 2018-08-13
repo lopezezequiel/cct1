@@ -19,11 +19,11 @@
           autoJoinPolicy: chrome.cast.AutoJoinPolicy.ORIGIN_SCOPED
         });
 
-        context.addEventListener(cast.framework.CastContext.CAST_STATE_CHANGED, function(event) {
+        context.addEventListener(cast.framework.CastContextEventType.CAST_STATE_CHANGED, function(event) {
           console.log('CAST_STATE_CHANGED', event);
         });
 
-        context.addEventListener(cast.framework.CastContext.SESSION_STATE_CHANGED, function(event) {
+        context.addEventListener(cast.framework.CastContextEventType.SESSION_STATE_CHANGED, function(event) {
           console.log('SESSION_STATE_CHANGED', event, context.getCurrentSession());
         });
 /*
