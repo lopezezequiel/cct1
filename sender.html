@@ -25,38 +25,43 @@
 
         context.addEventListener(cast.framework.CastContextEventType.SESSION_STATE_CHANGED, function(event) {
           console.log('SESSION_STATE_CHANGED', event, context.getCurrentSession());
+
+          if(event.sessionState === cast.framework.SessionState.SESSION_STARTED) {
+
+            var session = context.getCurrentSession();
+
+            session.addEventListener(cast.framework.CastSession.APPLICATION_STATUS_CHANGED, function(event) {
+              console.log('APPLICATION_STATUS_CHANGED', event);
+            });
+
+            session.addEventListener(cast.framework.CastSession.APPLICATION_METADATA_CHANGED, function(event) {
+              console.log('APPLICATION_METADATA_CHANGED', event);
+            });
+
+            session.addEventListener(cast.framework.CastSession.ACTIVE_INPUT_STATE_CHANGED, function(event) {
+              console.log('ACTIVE_INPUT_STATE_CHANGED', event);
+            });
+
+            session.addEventListener(cast.framework.CastSession.VOLUME_CHANGED, function(event) {
+              console.log('VOLUME_CHANGED', event);
+            });
+
+            session.addEventListener(cast.framework.CastSession.MEDIA_SESSION, function(event) {
+              console.log('MEDIA_SESSION', event);
+            });
+
+            console.log('cast device', session.getCastDevice());
+            console.log('session id', session.getSessionId());
+            console.log('session state', session.getSessionState());
+            console.log('get volume', session.getVolume());
+
+            console.log('sending message');
+            session.sendMessage('urn:x-cast:com.example.test', 'mensaje');
+
+          }
+
         });
-/*
-        var session = context.getCurrentSession();
 
-        session.addEventListener(cast.framework.CastSession.APPLICATION_STATUS_CHANGED, function(event) {
-          console.log('APPLICATION_STATUS_CHANGED', event);
-        });
-
-        session.addEventListener(cast.framework.CastSession.APPLICATION_METADATA_CHANGED, function(event) {
-          console.log('APPLICATION_METADATA_CHANGED', event);
-        });
-
-        session.addEventListener(cast.framework.CastSession.ACTIVE_INPUT_STATE_CHANGED, function(event) {
-          console.log('ACTIVE_INPUT_STATE_CHANGED', event);
-        });
-
-        session.addEventListener(cast.framework.CastSession.VOLUME_CHANGED, function(event) {
-          console.log('VOLUME_CHANGED', event);
-        });
-
-        session.addEventListener(cast.framework.CastSession.MEDIA_SESSION, function(event) {
-          console.log('MEDIA_SESSION', event);
-        });
-
-        console.log('cast device', session.getCastDevice());
-        console.log('session id', session.getSessionId());
-        console.log('session state', session.getSessionState());
-        console.log('get volume', session.getVolume());
-
-        console.log('sending message');
-        session.sendMessage('urn:x-cast:com.example.test', 'mensaje');
-          */
       }
 /*
         setTimeout(function() {
