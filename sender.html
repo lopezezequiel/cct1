@@ -17,10 +17,16 @@
         });
 
         var castSession = cast.framework.CastContext.getInstance().getCurrentSession();
-        castSession.sendMessage('urn:x-cast:ar.com.bondus', {
-          method: 'log',
-          value: 'Hola Mundo'
-        });
+        setTimeout(function() {
+          castSession.sendMessage('urn:x-cast:ar.com.bondus', {
+            method: 'log',
+            value: 'Hola Mundo'
+          }).then(function() {
+            console.log('mensaje enviado');
+          }).catch(function() {
+            console.log('falló');
+          });
+        }, 5000);
 
       };
 
