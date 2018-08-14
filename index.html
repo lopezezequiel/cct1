@@ -74,10 +74,9 @@
 
     const playerManager = context.getPlayerManager();
 
-    playerManager.addEventListener(cast.framework.events.category.CORE,
-            event => {
-                console.log(event);
-            });
+    playerManager.addEventListener(cast.framework.events.category.CAN_PLAY_THROUGH, function() {
+            playerManager.play();
+    });
 
 
 

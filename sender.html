@@ -68,7 +68,7 @@
             });
 
             var currentMediaURL = 'https://cct1.herokuapp.com/public/video.mp4';
-            var contentType = 'video/mp4';
+            var contentType = 'application/mp4';
 
             var mediaInfo = new chrome.cast.media.MediaInfo(currentMediaURL, contentType);
             var request = new chrome.cast.media.LoadRequest(mediaInfo);
@@ -77,8 +77,10 @@
 
                 var player = new cast.framework.RemotePlayer();
                 var playerController = new cast.framework.RemotePlayerController(player);
-                playerController.addEventListener(cast.framework.RemotePlayerEventType.PLAYER_STATE_CHANGED, function(e) {
-                  console.log('PLAYER_STATE_CHANGED', e);
+
+                playerController.addEventListener(
+                  cast.framework.RemotePlayerEventType.PLAYER_STATE_CHANGED, function() {
+                      console.log('PLAYER_STATE_CHANGED');
                 });
 
               },
