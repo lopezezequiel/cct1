@@ -74,6 +74,14 @@
 
     const playerManager = context.getPlayerManager();
 
+    playerManager.addEventListener(cast.framework.events.category.CORE,
+            event => {
+                console.log(event);
+            });
+
+
+
+
     context.start();
 
 /*
