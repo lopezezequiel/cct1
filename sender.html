@@ -77,7 +77,9 @@
 
                 var player = new cast.framework.RemotePlayer();
                 var playerController = new cast.framework.RemotePlayerController(player);
-                playerController.playOrPause();
+                playerController.addEventListener(cast.framework.RemotePlayerEventType.PLAYER_STATE_CHANGED, function(e) {
+                  console.log('PLAYER_STATE_CHANGED', e);
+                });
 
               },
               function(errorCode) {
