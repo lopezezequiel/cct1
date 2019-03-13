@@ -33,8 +33,8 @@
 
             var session = context.getCurrentSession();
  
-			session.addMessageListener('urn:x-cast:com.example.test', function(event) {
-				console.log('session.message from receiver', 'next dsas as', event);
+			session.addMessageListener('urn:x-cast:com.example.test', function(namespace, message) {
+				console.log('session.message from receiver', 'next dsas as', namespace, message);
 			});
 
 
