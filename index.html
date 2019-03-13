@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" manifest="/public/chromecast.manifest">
 <head>
     <meta charset="utf-8">
     <title>Receiver</title>
@@ -13,13 +13,10 @@
 <body>
   Ejemplo de receptor
   <script src="//www.gstatic.com/cast/sdk/libs/caf_receiver/v3/cast_receiver_framework.js"></script>
-  <cast-media-player></cast-media-player>
-  <div id="message">
+  <!--<cast-media-player></cast-media-player>-->
+  <div id="message"></div>
 
-  </div>
   <script>
-
-
     var context = cast.framework.CastReceiverContext.getInstance();
     context.addEventListener(cast.framework.system.EventType.READY, function(event) {
       console.log('READY', event);
@@ -77,9 +74,6 @@
     playerManager.addEventListener(cast.framework.events.category.CAN_PLAY_THROUGH, function() {
             playerManager.play();
     });
-
-
-
 
     context.start();
 
