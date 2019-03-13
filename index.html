@@ -28,13 +28,15 @@
     });
 
     context.addEventListener(cast.framework.system.EventType.SENDER_CONNECTED, function(event) {
-      console.log('SENDER_CONNECTED', event);
+		console.log('SENDER_CONNECTED', event);
 
-      console.log('application data', context.getApplicationData());
-      console.log('device capabilities', context.getDeviceCapabilities());
-      console.log('get senders', context.getSenders());
-      console.log('get system state', context.getSystemState());
-      console.log('get visibility state', context.getVisibilityState());
+		console.log('application data', context.getApplicationData());
+		console.log('device capabilities', context.getDeviceCapabilities());
+		console.log('get senders', context.getSenders());
+		console.log('get system state', context.getSystemState());
+		console.log('get visibility state', context.getVisibilityState());
+
+		context.sendCustomMessage('urn:x-cast:com.example.test', null, 'este el el id hardcodeado');
     });
 
     context.addEventListener(cast.framework.system.EventType.SENDER_DISCONNECTED, function(event) {
