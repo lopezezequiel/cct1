@@ -26,9 +26,6 @@
           console.log('CAST_STATE_CHANGED', event);
         });
 
-		context.addCustomMessageListener('urn:x-cast:com.example.test', function(event) {
-		  console.log('message from receiver', event);
-		});
 
         context.addEventListener(cast.framework.CastContextEventType.SESSION_STATE_CHANGED, function(event) {
           console.log('SESSION_STATE_CHANGED', event, context.getCurrentSession());
@@ -36,6 +33,11 @@
           if(event.sessionState === cast.framework.SessionState.SESSION_STARTED) {
 
             var session = context.getCurrentSession();
+            
+			session.addMessageListener('urn:x-cast:com.example.test', function(event) {
+				console.log('message from receiver', event);
+			});
+
 
             session.addEventListener(cast.framework.CastSession.APPLICATION_STATUS_CHANGED, function(event) {
               console.log('APPLICATION_STATUS_CHANGED', event);
