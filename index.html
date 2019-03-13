@@ -38,7 +38,7 @@
 
 		console.log('Enviando mensaje');
 		context.sendCustomMessage('urn:x-cast:com.example.test', event.senderId, 'este el el id hardcodeado');
-		context.sendCustomMessage('urn:x-cast:com.example.test', event.senderId, { asJson: 'este el el id hardcodeado'});
+		//context.sendCustomMessage('urn:x-cast:com.example.test', event.senderId, { asJson: 'este el el id hardcodeado'});
     });
 
     context.addEventListener(cast.framework.system.EventType.SENDER_DISCONNECTED, function(event) {
