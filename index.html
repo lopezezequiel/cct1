@@ -18,6 +18,7 @@
 
   <script>
     var context = cast.framework.CastReceiverContext.getInstance();
+
     context.addEventListener(cast.framework.system.EventType.READY, function(event) {
       console.log('READY', event);
     });
@@ -69,43 +70,10 @@
       document.getElementById('message').innerText = event.data.message;
     });
 
-    const playerManager = context.getPlayerManager();
-
-	/*
-    playerManager.addEventListener(cast.framework.events.category.CAN_PLAY_THROUGH, function() {
-            playerManager.play();
-    });
-    */
 
     context.start();
 
-/*
-    console.log('cast', cast);
-    console.log('cast.receiver', cast.receiver);
-    console.log('cast.receiver.CastReceiverManager', cast.receiver.CastReceiverManager);
-    console.log('cast.receiver.CastReceiverManager.getInstance()', cast.receiver.CastReceiverManager.getInstance());
 
-    var castReceiverManager = cast.receiver.CastReceiverManager.getInstance();
-    castReceiverManager.onReady = function(event) {
-      console.log('castReceiverManager.onReady', event);
-    }
-
-    castReceiverManager.onSenderConnected = function(event) {
-      console.log('castReceiverManager.onSenderConnected', event);
-    }
-
-    castReceiverManager.onSenderDisconnected = function(event) {
-      console.log('castReceiverManager.onSenderDisconnected', event);
-    }
-
-    var messageBus = castReceiverManager.getCastMessageBus('urn:x-cast:ar.com.bondus');
-    messageBus.onMessage = function(event) {
-      console.log('messageBus.onMessage', event);
-    }
-
-    castReceiverManager.start();
-*/
-    //cast.framework.CastReceiverContext.getInstance().start();
   </script>
 </body>
 </html>
