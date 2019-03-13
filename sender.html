@@ -12,113 +12,35 @@
     <input type="text" id="message"/>
 
     <script>
-		
-		console.log('prueba 14');
 
-      initializeCastApi = function() {
+	initializeCastApi = function() {
 
-        var context = cast.framework.CastContext.getInstance();
+		var context = cast.framework.CastContext.getInstance();
 
-        context.setOptions({
-          receiverApplicationId: 'F8EDFA55',
-          autoJoinPolicy: chrome.cast.AutoJoinPolicy.ORIGIN_SCOPED
-        });
+		context.setOptions({
+		  receiverApplicationId: 'F8EDFA55',
+		  autoJoinPolicy: chrome.cast.AutoJoinPolicy.ORIGIN_SCOPED
+		});
 
-        context.addEventListener(cast.framework.CastContextEventType.CAST_STATE_CHANGED, function(event) {
-          console.log('CAST_STATE_CHANGED', event);
-        });
+		context.addEventListener(cast.framework.CastContextEventType.SESSION_STATE_CHANGED, function(event) {
+			console.log('SESSION_STATE_CHANGED', event, context.getCurrentSession());
 
-        context.addEventListener(cast.framework.CastContextEventType.SESSION_STATE_CHANGED, function(event) {
-          console.log('SESSION_STATE_CHANGED', event, context.getCurrentSession());
+			if(event.sessionState === cast.framework.SessionState.SESSION_STARTED) {
 
-          if(event.sessionState === cast.framework.SessionState.SESSION_STARTED) {
+				var session = context.getCurrentSession();
 
-            var session = context.getCurrentSession();
- 
-			session.addMessageListener('urn:x-cast:com.example.test', function(namespace, message) {
-				console.log('session.message from receiver', namespace, message);
-			});
+				session.addMessageListener('urn:x-cast:com.example.test', function(namespace, message) {
+					console.log('session.message from receiver', namespace, message);
+				});
+			}
+		});
+	}
 
-
-            session.addEventListener(cast.framework.CastSession.APPLICATION_STATUS_CHANGED, function(event) {
-              console.log('APPLICATION_STATUS_CHANGED', event);
-            });
-
-            session.addEventListener(cast.framework.CastSession.APPLICATION_METADATA_CHANGED, function(event) {
-              console.log('APPLICATION_METADATA_CHANGED', event);
-            });
-
-            session.addEventListener(cast.framework.CastSession.ACTIVE_INPUT_STATE_CHANGED, function(event) {
-              console.log('ACTIVE_INPUT_STATE_CHANGED', event);
-            });
-
-            session.addEventListener(cast.framework.CastSession.VOLUME_CHANGED, function(event) {
-              console.log('VOLUME_CHANGED', event);
-            });
-
-            session.addEventListener(cast.framework.CastSession.MEDIA_SESSION, function(event) {
-              console.log('MEDIA_SESSION', event);
-            });
-
-            console.log('cast device', session.getCastDevice());
-            console.log('session id', session.getSessionId());
-            console.log('session state', session.getSessionState());
-            console.log('get volume', session.getVolume());
-
-            console.log('sending message');
-
-            document.getElementById('message').addEventListener('input', function() {
-              var message = this.value;
-              session.sendMessage('urn:x-cast:com.example.test', {
-                message: message
-              });
-            });
-
-            var currentMediaURL = 'https://cct1.herokuapp.com/public/video.mp4';
-            var contentType = 'application/mp4';
-
-            var mediaInfo = new chrome.cast.media.MediaInfo(currentMediaURL, contentType);
-            var request = new chrome.cast.media.LoadRequest(mediaInfo);
-            session.loadMedia(request).then(function() {
-                console.log('Load succeed');
-
-                var player = new cast.framework.RemotePlayer();
-                var playerController = new cast.framework.RemotePlayerController(player);
-
-                playerController.addEventListener(
-                  cast.framework.RemotePlayerEventType.PLAYER_STATE_CHANGED, function() {
-                      console.log('PLAYER_STATE_CHANGED');
-                });
-
-              },
-              function(errorCode) {
-                console.log('Error code: ' + errorCode);
-            });
-          }
-
-        });
-
-      }
-/*
-        setTimeout(function() {
-          castSession.sendMessage('urn:x-cast:ar.com.bondus', {
-            method: 'log',
-            value: 'Hola Mundo'
-          }).then(function() {
-            console.log('mensaje enviado');
-          }).catch(function() {
-            console.log('falló');
-          });
-        }, 5000);
-
-      };
-      */
-
-      window['__onGCastApiAvailable'] = function(isAvailable) {
-        if (isAvailable) {
-          initializeCastApi();
-        }
-      };
+	window['__onGCastApiAvailable'] = function(isAvailable) {
+		if (isAvailable) {
+			initializeCastApi();
+		}
+	};
 
     </script>
     <script src="https://www.gstatic.com/cv/js/sender/v1/cast_sender.js?loadCastFramework=1"></script>
