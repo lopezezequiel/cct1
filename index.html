@@ -36,7 +36,9 @@
 		console.log('get system state', context.getSystemState());
 		console.log('get visibility state', context.getVisibilityState());
 
-		context.sendCustomMessage('urn:x-cast:com.example.test', null, 'este el el id hardcodeado');
+		console.log('Enviando mensaje');
+		context.sendCustomMessage('urn:x-cast:com.example.test', event.senderId, 'este el el id hardcodeado');
+		context.sendCustomMessage('urn:x-cast:com.example.test', event.senderId, { asJson: 'este el el id hardcodeado'});
     });
 
     context.addEventListener(cast.framework.system.EventType.SENDER_DISCONNECTED, function(event) {
